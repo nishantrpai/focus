@@ -44,6 +44,16 @@ This is a closed system to help you focus.
 
 ![Alt text](public/working.png)
 
+# Warning
+
+Any weaponization of this project is not the intention of this project.
+
+This is for personal use only. 
+
+Any use in surveillance, tracking, or any other nefarious activity will not be tolerated.
+
+I will find you, and I will sue you.
+
 # Links
 
 [System and Revolution](https://www.amazon.com/System-Revolution-V-Shiva-Ayyadurai-ebook/dp/B01ECJLKL2/ref=tmm_kin_swatch_0)
