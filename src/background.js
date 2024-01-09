@@ -13,12 +13,17 @@ setInterval(() => {
     let startTime = result.startTime || new Date();
     let diff = now - new Date(startTime);
     let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  
-    chrome.storage.local.get(['totalHours']).then((result) => {
-      let totalHours = result.totalHours || 0;
-      totalHours += hours;
-      chrome.storage.local.set({ totalHours });
-    });
+    let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    if(minutes == 0) {
+      chrome.storage.local.get(['totalHours']).then((result) => {
+        let totalHours = result.totalHours || 0;
+        chrome.storage.local.set({ totalHours: totalHours + 1 }).then(() => {
+          document.getElementById('totalHours').innerHTML = `${totalHours + 1}H`;
+        });
+      });
+    }
+    
   });
 }, 1000);
 
