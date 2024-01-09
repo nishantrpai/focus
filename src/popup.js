@@ -3,110 +3,41 @@
 import './popup.css';
 
 (function () {
-  // We will make use of Storage API to get and store `count` value
-  // More information on Storage API can we found at
-  // https://developer.chrome.com/extensions/storage
 
-  // To get storage access, we have to mention it in `permissions` property of manifest.json file
-  // More information on Permissions can we found at
-  // https://developer.chrome.com/extensions/declare_permissions
-  const counterStorage = {
-    get: (cb) => {
-      chrome.storage.sync.get(['count'], (result) => {
-        cb(result.count);
-      });
-    },
-    set: (value, cb) => {
-      chrome.storage.sync.set(
-        {
-          count: value,
-        },
-        () => {
-          cb();
-        }
-      );
-    },
-  };
-
-  function setupCounter(initialValue = 0) {
-    document.getElementById('counter').innerHTML = initialValue;
-
-    document.getElementById('incrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'INCREMENT',
+  function setupCounter() {
+    document.getElementById('slider-off')?.addEventListener('click', () => {
+      // turn on focus mode
+      chrome.storage.local.set({ focusMode: false }).then(() => {
+        console.log('Value is set to false');
       });
     });
 
-    document.getElementById('decrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'DECREMENT',
+    document.getElementById('slider-on')?.addEventListener('click', () => {
+      // turn on focus mode
+      chrome.storage.local.set({ focusMode: true }).then(() => {
+        console.log('Value is set to true');
       });
     });
   }
 
-  function updateCounter({ type }) {
-    counterStorage.get((count) => {
-      let newCount;
 
-      if (type === 'INCREMENT') {
-        newCount = count + 1;
-      } else if (type === 'DECREMENT') {
-        newCount = count - 1;
-      } else {
-        newCount = count;
-      }
-
-      counterStorage.set(newCount, () => {
-        document.getElementById('counter').innerHTML = newCount;
-
-        // Communicate with content script of
-        // active tab by sending a message
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-          const tab = tabs[0];
-
-          chrome.tabs.sendMessage(
-            tab.id,
-            {
-              type: 'COUNT',
-              payload: {
-                count: newCount,
-              },
-            },
-            (response) => {
-              console.log('Current count value passed to contentScript file');
-            }
-          );
-        });
-      });
-    });
-  }
 
   function restoreCounter() {
-    // Restore count value
-    counterStorage.get((count) => {
-      if (typeof count === 'undefined') {
-        // Set counter value as 0
-        counterStorage.set(0, () => {
-          setupCounter(0);
-        });
+    chrome.storage.local.get(['focusMode'], function (result) {
+      console.log('Value currently is ' + result.focusMode);
+      if (result.focusMode === true) {
+        document.getElementById('toggle').checked = true;
       } else {
-        setupCounter(count);
+        document.getElementById('toggle').checked = false;
       }
+      setupCounter();
     });
   }
 
   document.addEventListener('DOMContentLoaded', restoreCounter);
 
-  // Communicate with background file by sending a message
-  chrome.runtime.sendMessage(
-    {
-      type: 'GREETINGS',
-      payload: {
-        message: 'Hello, my name is Pop. I am from Popup.',
-      },
-    },
-    (response) => {
-      console.log(response.message);
-    }
-  );
+  window.onload = function () {
+    console.log('window.onload');
+    restoreCounter();
+  };
 })();

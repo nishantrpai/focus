@@ -7,9 +7,13 @@
 
 const OPENAI_API_KEY = 'YOUR_API_KEY';
 
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   // You can log specific properties like changeInfo.url if you're only interested in URL changes
-  if (changeInfo.title) {
+  // get local storage if focus mode is on
+  const {focusMode} = await chrome.storage.local.get(['focusMode']);
+  console.log('focusMode', focusMode);
+
+  if (changeInfo.title && focusMode === true) {
     fetch("https://api.openai.com/v1/completions", {
       method: "POST",
       headers: {
