@@ -18,6 +18,7 @@ body {
   width: 270px;
   height: 270px;
   background-color: #000;
+  user-select: none;
 }
 
 .app {
@@ -153,4 +154,13 @@ input:not(:checked) + .slider .off {
 
 input:focus + .slider {
   box-shadow: 0 0 1px #fff, 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.settings {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: #888;
+  text-decoration: none;
 }

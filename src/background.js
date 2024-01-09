@@ -7,6 +7,21 @@
 
 const OPENAI_API_KEY = 'YOUR_API_KEY';
 
+setInterval(() => {
+  chrome.storage.local.get(['startTime']).then((result) => {
+    let now = new Date();
+    let startTime = result.startTime || new Date();
+    let diff = now - new Date(startTime);
+    let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  
+    chrome.storage.local.get(['totalHours']).then((result) => {
+      let totalHours = result.totalHours || 0;
+      totalHours += hours;
+      chrome.storage.local.set({ totalHours });
+    });
+  });
+}, 1000);
+
 chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   // You can log specific properties like changeInfo.url if you're only interested in URL changes
   // get local storage if focus mode is on

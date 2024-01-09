@@ -5,9 +5,10 @@ import './popup.css';
 
 (function () {
 
-  let timer = '';
+  let timer = null;
 
   function startTimer() {
+    console.log('startTimer');
     timer = setInterval(function () {
       let now = new Date();
       chrome.storage.local.get(['startTime']).then((result) => {
@@ -23,25 +24,21 @@ import './popup.css';
   }
 
   function setupCounter() {
-    console.log('setupCounter');
     document.getElementById('toggle')?.addEventListener('click', () => {
       // turn on focus mode
       let checked = document.getElementById('toggle').checked;
 
       if (checked) {
-        console.log('focus mode on');
         chrome.storage.local.set({ focusMode: true }).then(() => {
           // start counter
-          chrome.storage.local.set({ startTime: new Date() }).then(() => {
-            console.log('start time is set');
+          chrome.storage.local.set({ startTime: new Date().toString() }).then(() => {
             if (!timer) startTimer();
           });
         });
       } else {
         chrome.storage.local.set({ focusMode: false }).then(() => {
-          console.log('Value is set to false');
-          // stop counter
           clearInterval(timer);
+          timer = null;
           document.getElementById('timer').innerHTML = '00:00:00';
         });
       }
@@ -54,6 +51,12 @@ import './popup.css';
   function restoreCounter() {
     console.log('restoreCounter');
     let focusMode = false;
+
+    chrome.storage.local.get(['totalHours']).then((result) => {
+      let totalHours = result.totalHours || 0;
+      document.getElementById('totalHours').innerHTML = `${totalHours}H`;
+    });
+
     chrome.storage.local.get(['focusMode']).then((result) => {
       focusMode = result.focusMode || false;
       if (focusMode === true) {
