@@ -19,7 +19,6 @@ setInterval(() => {
       chrome.storage.local.get(['totalHours']).then((result) => {
         let totalHours = result.totalHours || 0;
         chrome.storage.local.set({ totalHours: totalHours + 1 }).then(() => {
-          document.getElementById('totalHours').innerHTML = `${totalHours + 1}H`;
         });
       });
     }
