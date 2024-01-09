@@ -164,3 +164,50 @@ input:focus + .slider {
   color: #888;
   text-decoration: none;
 }
+
+.settings-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  color: #888;
+  font-size: 20px;
+}
+
+.settings-container input {
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+
+#saveBtn {
+  cursor: pointer;
+  background-color: #eee;
+  color: #333;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#cancelBtn {
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+}

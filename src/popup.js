@@ -73,6 +73,20 @@ import './popup.css';
 
   window.onload = async function () {
     console.log('window.onload');
+    document.getElementById('openaikey').value = await chrome.storage.local.get(['openaikey']).then((result) => result.openaikey || '');
+    document.getElementById('settings').addEventListener('click', () => {
+      document.getElementById('settings-page').style.display = 'block';
+      document.getElementById('main-page').style.display = 'none';
+    });
+    document.getElementById('cancelBtn').addEventListener('click', () => {
+      document.getElementById('settings-page').style.display = 'none';
+      document.getElementById('main-page').style.display = 'block';
+    });
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      if(document.getElementById('openaikey').value) chrome.storage.local.set({ openaikey: document.getElementById('openaikey').value });
+      document.getElementById('cancelBtn').innerHTML = 'Close';
+      document.getElementById('saveBtn').innerHTML = 'Saved!'; 
+    });
     restoreCounter();
   };
 })();
