@@ -15,8 +15,9 @@ html {
 }
 
 body {
-  width: 350px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
+  background-color: #000;
 }
 
 .app {
@@ -26,7 +27,9 @@ body {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  padding: 20px;
+  padding: 30px;
+  border-radius: 5px;
+  background-color: #000;
 }
 
 .title {
@@ -52,41 +55,82 @@ code {
   margin-bottom: 5px;
 }
 
-.counter {
-  font-size: 36px;
-  font-weight: 700;
-}
-
-.button-container {
-  margin-top: 15px;
-}
-
-.button {
-  border: 0;
+.switch {
+  position: relative;
   display: inline-block;
-  padding: 10px 20px;
-  margin-right: 4px;
-  margin-left: 4px;
-  background-color: bisque;
-  font-size: 16px;
+  width: 40px;
+  height: 17px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
   cursor: pointer;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: transform 0.2s ease;
-  user-select: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.button:focus {
-  outline: none;
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 26px;
+  top: 0px;
+  left: 0px;
+  background-color: transparent;
+  /* transition: .4s; */
+  border-radius: 50%;
 }
 
-.button:hover {
-  transform: scale(1.1);
+.icon {
+  display: none;
+  position: absolute;
+  color: white;
+  font-size: 20px;
+  line-height: 16px;
 }
 
-.divider {
-  margin: 30px auto 25px;
-  width: 50px;
-  border: 0.5px dashed #000;
-  opacity: 0.1;
+.on {
+  top: 0px;
+  right: -5px;
+  color: #2196F3;
+  /* transition: all 0.5s ease-in-out; */
+}
+
+.off {
+  top: 0px;
+  left: -5px;
+  color: #eee;
+  transition: all 0.5s ease-in-out;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+input:checked + .slider .on {
+  display: block;
+}
+
+input:not(:checked) + .slider .off {
+  display: block;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3, 0 0 10px rgba(0, 0, 0, 0.3);
 }

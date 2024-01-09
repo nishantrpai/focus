@@ -5,17 +5,46 @@
 // For more information on background script,
 // See https://developer.chrome.com/extensions/background_pages
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === 'GREETINGS') {
-    const message = `Hi ${
-      sender.tab ? 'Con' : 'Pop'
-    }, my name is Bac. I am from Background. It's great to hear from you.`;
+const OPENAI_API_KEY = 'YOUR_API_KEY';
 
-    // Log message coming from the `request` parameter
-    console.log(request.payload.message);
-    // Send a response message
-    sendResponse({
-      message,
-    });
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  // You can log specific properties like changeInfo.url if you're only interested in URL changes
+  if (changeInfo.title) {
+    fetch("https://api.openai.com/v1/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo-instruct",
+        prompt: `Given a browser title, determine if it is an unproductive, uninformative time sink with very little or not. Distractions in particular. \n\nRespond only in the following json format.\n\n{ "time_sink": true/false}\n\nTitle: ${changeInfo.title}\n`,
+        temperature: 0,
+        max_tokens: 100,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        let json_string = data.choices[0].text;
+        // replace everything before the first { and after the last }
+        json_string = json_string.replace(/^[^{]+/, '');
+        json_string = json_string.replace(/[^}]+$/, '');
+        // replace all newlines
+        json_string = json_string.replace(/\n/g, '');
+        let responseData = JSON.parse(json_string);
+        if (responseData['time_sink']) {
+          console.log('Time sink detected', changeInfo.title);
+          chrome.notifications.create({
+            type: 'basic',
+            iconUrl: 'icons/icon_48.png',
+            title: 'Time Sink Detected',
+            message: 'Careful! you are about to enter a time sink.' + changeInfo.title
+          });
+        }
+      })
+      .catch(error => console.error('Error:', error));
   }
 });
