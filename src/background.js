@@ -31,14 +31,14 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   // You can log specific properties like changeInfo.url if you're only interested in URL changes
   // get local storage if focus mode is on
   const {focusMode} = await chrome.storage.local.get(['focusMode']);
-  console.log('focusMode', focusMode);
+  const {openaikey} = await chrome.storage.local.get(['openaikey']);
 
-  if (false) {
+  if (changeInfo.title && focusMode && openaikey) {
     fetch("https://api.openai.com/v1/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${OPENAI_API_KEY}`
+        "Authorization": `Bearer ${openaikey}`
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo-instruct",
@@ -60,6 +60,10 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
         json_string = json_string.replace(/\n/g, '');
         let responseData = JSON.parse(json_string);
         if (responseData['time_sink']) {
+          // reset timer
+          chrome.storage.local.set({ startTime: new Date().toString() }).then(() => {
+            console.log('Timer reset'); 
+          });
           console.log('Time sink detected', changeInfo.title);
           chrome.notifications.create({
             type: 'basic',
