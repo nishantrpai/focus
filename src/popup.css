@@ -15,8 +15,8 @@ html {
 }
 
 body {
-  width: 200px;
-  height: 200px;
+  width: 270px;
+  height: 270px;
   background-color: #000;
 }
 
@@ -50,16 +50,35 @@ code {
   border-radius: 2px;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  align-items: center;
+}
+
+.counter {
+  font-size: 64px;
+}
+
 .counter-label {
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 5px;
+}
+
+.counter.active {
+  color: #fff;
+}
+
+.counter-label.active {
+  color: #888;
 }
 
 .switch {
   position: relative;
   display: inline-block;
   width: 40px;
-  height: 17px;
+  height: 12px;
 }
 
 .switch input { 
@@ -95,6 +114,7 @@ code {
 
 .icon {
   display: none;
+  user-select: none; 
   position: absolute;
   color: white;
   font-size: 20px;
@@ -102,21 +122,21 @@ code {
 }
 
 .on {
-  top: 0px;
+  top: -2px;
   right: -5px;
   color: #2196F3;
   /* transition: all 0.5s ease-in-out; */
 }
 
 .off {
-  top: 0px;
+  top: -2px;
   left: -5px;
   color: #eee;
   transition: all 0.5s ease-in-out;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #333;
 }
 
 input:checked + .slider:before {
@@ -132,5 +152,5 @@ input:not(:checked) + .slider .off {
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3, 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1px #fff, 0 0 10px rgba(0, 0, 0, 0.3);
 }

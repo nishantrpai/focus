@@ -13,7 +13,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   const {focusMode} = await chrome.storage.local.get(['focusMode']);
   console.log('focusMode', focusMode);
 
-  if (changeInfo.title && focusMode === true) {
+  if (false) {
     fetch("https://api.openai.com/v1/completions", {
       method: "POST",
       headers: {

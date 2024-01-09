@@ -9,9 +9,9 @@
 
 <body>
   <div class="app">
-    <div class="counter active">Focus</div>
     <div class="button-container">
-      <!-- toggle -->
+      <p id="time" class="counter active">100H</p>
+      <p id="timer" class="counter-label active">00:00:00</p>
       <label class="switch">
         <input type="checkbox" id="toggle">
         <span class="slider round">
@@ -19,12 +19,7 @@
           <span id="slider-on" class="icon off">😴</span>
         </span>
       </label>
-
-      <!-- <input type="openaiKey" id="openaiKey" name="openaiKey" placeholder="OpenAI Key" class="input" /> -->
     </div>
-
-    <hr class="divider" />
-
   </div>
 
   <script src="popup.js"></script>
