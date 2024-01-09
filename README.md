@@ -26,6 +26,12 @@ We need control systems to control the output of a system.
 
 Our outputs are being converted to dissipated energy. We want to minimize this dissipated energy, maximize the output, or both.
 
+This project is more of an experiment than really an answer.
+
+I also run https://focus.app which is an open system to help you focus.
+
+This is a closed system to help you focus.
+
 # Links
 
 [System and Revolution](https://www.amazon.com/System-Revolution-V-Shiva-Ayyadurai-ebook/dp/B01ECJLKL2/ref=tmm_kin_swatch_0)
