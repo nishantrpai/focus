@@ -1,5 +1,6 @@
-# What is a control system?
+# What is a system?
 
+## Open systems
 There are open systems which are y = f(x).
 
 You can control the input x and observe the output y.
@@ -8,6 +9,7 @@ For e.g.,
 
 press a button -> light turns on
 
+## Closed loop system
 There are closed systems which are y = f(x, u).
 
 You can control the input x and the control u and observe the output y.
@@ -24,13 +26,13 @@ This app is a controller for yourself.
 
 There are control systems out there, that want your engagement/attention as output and design systems to maximize this engagement.
 
-We need a control system to control our engagement/attention.
+We need a control system to control our engagement/attention(?). 
 
 # Why do we need control systems?
 
 We need control systems to control the output of a system.
 
-Our outputs are being converted to dissipated energy. We want to minimize this dissipated energy, maximize the output, or both.
+Our outputs are being converted to dissipated energy. We want to minimize this dissipated energy, maximize the output, or both. Dissipated in the sense that it is not useful to us.
 
 This project is more of an experiment than really an answer.
 
