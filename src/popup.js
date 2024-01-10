@@ -87,6 +87,9 @@ import './popup.css';
     });
     document.getElementById('saveBtn').addEventListener('click', () => {
       if(document.getElementById('openaikey').value) chrome.storage.local.set({ openaikey: document.getElementById('openaikey').value });
+
+      if(document.getElementById('filters').value) chrome.storage.local.set({ filters: document.getElementById('filters').value });
+
       document.getElementById('cancelBtn').innerHTML = 'Close';
       document.getElementById('saveBtn').innerHTML = 'Saved!'; 
     });

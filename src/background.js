@@ -30,6 +30,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   // get local storage if focus mode is on
   const {focusMode} = await chrome.storage.local.get(['focusMode']);
   const {openaikey} = await chrome.storage.local.get(['openaikey']);
+  const {filters} = await chrome.storage.local.get(['filters']);
 
   console.log('tab updated', tabId, changeInfo, tab);
 
@@ -39,7 +40,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   console.log('tab.url', tab.url);
   console.log('tab.status', tab.status);
 
-  if (tab.title && focusMode && openaikey && !tab.url.includes('chrome://') && tab.status !== "loading") {
+  if (tab.title && focusMode && openaikey && !tab.url.includes('chrome://') && tab.status !== "loading" && filters) {
     console.log('tab updated', tabId, changeInfo, tab);
     fetch("https://api.openai.com/v1/completions", {
       method: "POST",
@@ -49,9 +50,16 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo-instruct",
-        prompt: `Evaluate a tab title to assess its value. identify clickbait, sensational language. conclude with a json response (not URLs): {'\''waste'\'': true} if the title is likely a waste of time, or  a URL looks like a URL then  {'\''waste'\'': false} if it seems potentially useful. \n\nTitle: ${tab.title}\n`,
+        prompt: `Given a browser title,
+
+        If it likely to fall in ${filters} output: true
+        
+        else false
+        
+        Title: ${tab.title}
+        `,
         temperature: 0,
-        max_tokens: 100,
+        max_tokens: 10,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0
