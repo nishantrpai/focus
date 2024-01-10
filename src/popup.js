@@ -77,6 +77,8 @@ import './popup.css';
   window.onload = async function () {
     console.log('window.onload');
     document.getElementById('openaikey').value = await chrome.storage.local.get(['openaikey']).then((result) => result.openaikey || '');
+    document.getElementById('filters').value = await chrome.storage.local.get(['filters']).then((result) => result.filters || '');
+
     document.getElementById('settings').addEventListener('click', () => {
       document.getElementById('settings-page').style.display = 'block';
       document.getElementById('main-page').style.display = 'none';

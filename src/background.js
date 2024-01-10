@@ -30,7 +30,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   // get local storage if focus mode is on
   const {focusMode} = await chrome.storage.local.get(['focusMode']);
   const {openaikey} = await chrome.storage.local.get(['openaikey']);
-  const {filters} = await chrome.storage.local.get(['filters']);
+  const {filters} = await chrome.storage.local.get(['filters']) || 'Political Content, Sensationalist Gaming News, Tabloid News, Celebrity Entertainment, Sensationalism, Clickbait, Unreliable Sources';
 
   console.log('tab updated', tabId, changeInfo, tab);
 
@@ -39,6 +39,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   console.log('openaikey', openaikey);
   console.log('tab.url', tab.url);
   console.log('tab.status', tab.status);
+  console.log('filters', filters);
 
   if (tab.title && focusMode && openaikey && !tab.url.includes('chrome://') && tab.status !== "loading" && filters) {
     console.log('tab updated', tabId, changeInfo, tab);
@@ -67,15 +68,10 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
     })
       .then(response => response.json())
       .then(data => {
-        let json_string = data.choices[0].text;
+        let response = data.choices[0].text;
         // replace everything before the first { and after the last }
-        json_string = json_string.replace(/^[^{]+/, '');
-        json_string = json_string.replace(/[^}]+$/, '');
-        // replace all newlines
-        json_string = json_string.replace(/\n/g, '');
-        let responseData = JSON.parse(json_string);
-        console.log('responseData', responseData);
-        if (responseData['waste']) {
+        console.log('response', response);
+        if (response.toLowerCase().includes('true')) {
           // reset timer
           chrome.storage.local.set({ startTime: new Date().toString() }).then(() => {
             console.log('Timer reset'); 
