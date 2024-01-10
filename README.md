@@ -2,6 +2,17 @@
 
 ![Alt text](public/working.png)
 
+# Screenshots
+
+![Alt text](screenshots/1.png)
+
+![Alt text](screenshots/2.png)
+
+![Alt text](screenshots/3.png)
+
+![Alt text](screenshots/4.png)
+
+
 ## What is a system?
 
 ### Open systems
@@ -25,6 +36,8 @@ To give an example, consider a thermostat. The input is the temperature of the r
 turn on -> thermotat adjusts the heater -> temperature of the room changes
 
 The temperature of the room is the output. The desired temperature is the input. The heater is the control.
+
+Another example is an airplane, that is flying. Maintains height even though there are disturbances.
 
 This app is a controller for yourself.
 
