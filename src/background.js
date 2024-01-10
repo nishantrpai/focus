@@ -31,7 +31,16 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   const {focusMode} = await chrome.storage.local.get(['focusMode']);
   const {openaikey} = await chrome.storage.local.get(['openaikey']);
 
-  if (changeInfo.title && focusMode && openaikey) {
+  console.log('tab updated', tabId, changeInfo, tab);
+
+  console.log('tab.title', tab.title);
+  console.log('focusMode', focusMode);
+  console.log('openaikey', openaikey);
+  console.log('tab.url', tab.url);
+  console.log('tab.status', tab.status);
+
+  if (tab.title && focusMode && openaikey && !tab.url.includes('chrome://') && tab.status !== "loading") {
+    console.log('tab updated', tabId, changeInfo, tab);
     fetch("https://api.openai.com/v1/completions", {
       method: "POST",
       headers: {
@@ -40,7 +49,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo-instruct",
-        prompt: `Given a browser title, determine if it is an unproductive, uninformative time sink with very little or not. Distractions in particular. \n\nRespond only in the following json format.\n\n{ "time_sink": true/false}\n\nTitle: ${changeInfo.title}\n`,
+        prompt: `Evaluate a tab title to assess its value. identify clickbait, sensational language. conclude with a json response (not URLs): {'\''waste'\'': true} if the title is likely a waste of time, or  a URL looks like a URL then  {'\''waste'\'': false} if it seems potentially useful. \n\nTitle: ${tab.title}\n`,
         temperature: 0,
         max_tokens: 100,
         top_p: 1,
@@ -57,17 +66,18 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
         // replace all newlines
         json_string = json_string.replace(/\n/g, '');
         let responseData = JSON.parse(json_string);
-        if (responseData['time_sink']) {
+        console.log('responseData', responseData);
+        if (responseData['waste']) {
           // reset timer
           chrome.storage.local.set({ startTime: new Date().toString() }).then(() => {
             console.log('Timer reset'); 
           });
-          console.log('Time sink detected', changeInfo.title);
+          console.log('Time sink detected', tab.title);
           chrome.notifications.create({
             type: 'basic',
             iconUrl: 'icons/icon_48.png',
             title: 'Time Sink Detected',
-            message: 'Time sink detected: ' + changeInfo.title + '. Resetting timer.'
+            message: 'Time sink detected: ' + tab.title + '. Resetting timer.'
           });
         }
       })

@@ -185,6 +185,13 @@ input:focus + .slider {
   border-radius: 5px;
 }
 
+.settings-container label {
+  color: #ccc;
+  font-size: 12px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
 #saveBtn {
   cursor: pointer;
   background-color: #eee;
@@ -210,4 +217,11 @@ input:focus + .slider {
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
+}
+
+.form-elem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
 }

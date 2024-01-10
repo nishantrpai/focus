@@ -21,7 +21,15 @@
       </svg>
     </div>
     <div id="settings-page" class="settings-container" style="display: none;">
-      <input type="text" id="openaikey" placeholder="OpenAI API Key" />
+      <div class="form-elem">
+        <label>OpenAI Key</label>
+        <input type="text" id="openaikey" placeholder="OpenAI API Key" />
+      </div>
+      <div class="form-elem">
+        <label>Filters</label>
+        <input type="text" id="filters" placeholder="Categories you want to filter"
+          value="Political Content, Sensationalist Gaming News, Tabloid News, Celebrity Entertainment, Sensationalism, Clickbait, Unreliable Sources" />
+      </div>
       <div class="form-container">
         <button id="saveBtn">Save</button>
         <button id="cancelBtn">Cancel</button>
