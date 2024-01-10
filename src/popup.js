@@ -32,6 +32,8 @@ import './popup.css';
         chrome.storage.local.set({ focusMode: true }).then(() => {
           // start counter
           chrome.storage.local.set({ startTime: new Date().toString() }).then(() => {
+            // send message to background.js
+            chrome.runtime.sendMessage({ focusMode: true });
             if (!timer) startTimer();
           });
         });
@@ -39,6 +41,7 @@ import './popup.css';
         chrome.storage.local.set({ focusMode: false }).then(() => {
           clearInterval(timer);
           timer = null;
+          chrome.runtime.sendMessage({ focusMode: false });
           document.getElementById('timer').innerHTML = '00:00:00';
         });
       }

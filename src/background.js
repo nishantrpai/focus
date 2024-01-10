@@ -5,8 +5,6 @@
 // For more information on background script,
 // See https://developer.chrome.com/extensions/background_pages
 
-const OPENAI_API_KEY = 'YOUR_API_KEY';
-
 setInterval(() => {
   chrome.storage.local.get(['startTime']).then((result) => {
     let now = new Date();
@@ -73,5 +71,22 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
         }
       })
       .catch(error => console.error('Error:', error));
+  }
+});
+
+
+// receive message from popup.js
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.focusMode) {
+    chrome.storage.local.set({ startTime: new Date().toString() }).then(() => {
+      chrome.action.setBadgeText({ text: '😠' });
+      chrome.action.setBadgeBackgroundColor({ color: '#333' });
+    });
+  } else {
+    chrome.storage.local.set({ startTime: new Date().toString() }).then(() => {
+      console.log('Timer stopped');
+      chrome.action.setBadgeText({ text: '😴' });
+      chrome.action.setBadgeBackgroundColor({ color: '#fff' });
+    });
   }
 });
