@@ -66,6 +66,10 @@ Flex your points on twitter.
 
 Good luck.
 
+# Demo
+
+![demo](screenshots/demo.mov)
+
 # Screenshots
 
 ![Alt text](screenshots/1.png)
