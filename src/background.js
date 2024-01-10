@@ -12,8 +12,9 @@ setInterval(() => {
     let diff = now - new Date(startTime);
     let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    if(minutes == 0) {
+    if(minutes == 0 && seconds == 0 && hours != 0) {
       chrome.storage.local.get(['totalHours']).then((result) => {
         let totalHours = result.totalHours || 0;
         chrome.storage.local.set({ totalHours: totalHours + 1 }).then(() => {
@@ -66,7 +67,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
             type: 'basic',
             iconUrl: 'icons/icon_48.png',
             title: 'Time Sink Detected',
-            message: 'Careful! you are about to enter a time sink.' + changeInfo.title
+            message: 'Time sink detected: ' + changeInfo.title + '. Resetting timer.'
           });
         }
       })
