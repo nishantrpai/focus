@@ -68,7 +68,9 @@ Good luck.
 
 # Demo
 
-![demo](screenshots/demo.mov)
+
+https://github.com/nishantrpai/focus-controller/assets/7431166/be532179-3f0b-40ef-84c3-c06817384216
+
 
 # Screenshots
 
