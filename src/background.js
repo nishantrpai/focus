@@ -5,8 +5,19 @@
 // For more information on background script,
 // See https://developer.chrome.com/extensions/background_pages
 
-setInterval(() => {
+setInterval(async () => {
+  let { focusMode } = await chrome.storage.local.get(['focusMode']);
+
   chrome.storage.local.get(['startTime']).then((result) => {
+    if (!focusMode) {
+      chrome.action.setBadgeText({ text: '😴' });
+      chrome.action.setBadgeBackgroundColor({ color: '#fff' });
+      return;
+    } else {
+      chrome.action.setBadgeText({ text: '😠' });
+      chrome.action.setBadgeBackgroundColor({ color: '#333' });
+    }
+
     let now = new Date();
     let startTime = result.startTime || new Date();
     let diff = now - new Date(startTime);
@@ -14,23 +25,23 @@ setInterval(() => {
     let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     let seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    if(minutes == 0 && seconds == 0 && hours != 0) {
+    if (minutes == 0 && seconds == 0 && hours != 0) {
       chrome.storage.local.get(['totalHours']).then((result) => {
         let totalHours = result.totalHours || 0;
         chrome.storage.local.set({ totalHours: totalHours + 1 }).then(() => {
         });
       });
     }
-    
+
   });
 }, 1000);
 
 chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   // You can log specific properties like changeInfo.url if you're only interested in URL changes
   // get local storage if focus mode is on
-  const {focusMode} = await chrome.storage.local.get(['focusMode']);
-  const {openaikey} = await chrome.storage.local.get(['openaikey']);
-  const {filters} = await chrome.storage.local.get(['filters']) || 'Political Content, Sensationalist Gaming News, Tabloid News, Celebrity Entertainment, Sensationalism, Clickbait, Unreliable Sources';
+  const { focusMode } = await chrome.storage.local.get(['focusMode']);
+  const { openaikey } = await chrome.storage.local.get(['openaikey']);
+  const { filters } = await chrome.storage.local.get(['filters']) || 'Political Content, Sensationalist Gaming News, Tabloid News, Celebrity Entertainment, Sensationalism, Clickbait, Unreliable Sources';
 
   console.log('tab updated', tabId, changeInfo, tab);
 
@@ -74,7 +85,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
         if (response.toLowerCase().includes('true')) {
           // reset timer
           chrome.storage.local.set({ startTime: new Date().toString() }).then(() => {
-            console.log('Timer reset'); 
+            console.log('Timer reset');
           });
           console.log('Time sink detected', tab.title);
           chrome.notifications.create({
