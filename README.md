@@ -1,6 +1,10 @@
-# What is a system?
+# Overview 
 
-## Open systems
+![Alt text](public/working.png)
+
+## What is a system?
+
+### Open systems
 There are open systems which are y = f(x).
 
 You can control the input x and observe the output y.
@@ -9,7 +13,7 @@ For e.g.,
 
 press a button -> light turns on
 
-## Closed loop system
+### Closed loop system
 There are closed systems which are y = f(x, u).
 
 You can control the input x and the control u and observe the output y.
@@ -28,7 +32,7 @@ There are control systems out there, that want your engagement/attention as outp
 
 We need a control system to control our engagement/attention(?). 
 
-# Why do we need control systems?
+## Why do we need control systems?
 
 We need control systems to control the output of a system.
 
@@ -40,9 +44,6 @@ I also run https://focus.app which is an open system to help you focus.
 
 This is a closed system to help you focus.
 
-# Overview 
-
-![Alt text](public/working.png)
 
 # Warning
 
@@ -53,6 +54,22 @@ This is for personal use only.
 Any use in surveillance, tracking, or any other nefarious activity will not be tolerated.
 
 I will find you, and I will sue you.
+
+## Economics
+
+The economics of this project is to help you focus.
+
+The openai api might be expensive. I am not sure how much it will cost.
+
+Token usage: 10 tokens per each tab.
+
+Pricing is $0.0001 per token. 
+
+10 * 0.0001 = $0.001
+
+$0.001 per tab. Sheesh. That is expensive.
+
+Cost of focus. Priceless.
 
 # Links
 
