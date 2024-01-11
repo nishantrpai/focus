@@ -15,7 +15,7 @@ setInterval(async () => {
       return;
     } else {
       chrome.action.setBadgeText({ text: '😠' });
-      chrome.action.setBadgeBackgroundColor({ color: '#333' });
+      chrome.action.setBadgeBackgroundColor({ color: '#000' });
     }
 
     let now = new Date();
@@ -109,7 +109,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.focusMode) {
     chrome.storage.local.set({ startTime: new Date().toString() }).then(() => {
       chrome.action.setBadgeText({ text: '😠' });
-      chrome.action.setBadgeBackgroundColor({ color: '#fc5953' });
+      chrome.action.setBadgeBackgroundColor({ color: '#000' });
     });
   } else {
     chrome.storage.local.set({ startTime: new Date().toString() }).then(() => {
