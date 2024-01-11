@@ -19,6 +19,12 @@ import './popup.css';
         let seconds = Math.floor((diff % (1000 * 60)) / 1000);
         let time = `${hours > 9 ? hours : '0' + hours}:${minutes > 9 ? minutes : '0' + minutes}:${seconds > 9 ? seconds : '0' + seconds}`
         document.getElementById('timer').innerHTML = time;
+        if (minutes == 0 && seconds == 1 && hours != 0) {
+          chrome.storage.local.get(['totalHours']).then((result) => {
+            let totalHours = result.totalHours || 0;
+            document.getElementById('totalHours').innerHTML = `${totalHours}H`;
+          });
+        }
       });
     }, 1000);
   }
@@ -88,12 +94,12 @@ import './popup.css';
       document.getElementById('main-page').style.display = 'block';
     });
     document.getElementById('saveBtn').addEventListener('click', () => {
-      if(document.getElementById('openaikey').value) chrome.storage.local.set({ openaikey: document.getElementById('openaikey').value });
+      if (document.getElementById('openaikey').value) chrome.storage.local.set({ openaikey: document.getElementById('openaikey').value });
 
-      if(document.getElementById('filters').value) chrome.storage.local.set({ filters: document.getElementById('filters').value });
+      if (document.getElementById('filters').value) chrome.storage.local.set({ filters: document.getElementById('filters').value });
 
       document.getElementById('cancelBtn').innerHTML = 'Close';
-      document.getElementById('saveBtn').innerHTML = 'Saved!'; 
+      document.getElementById('saveBtn').innerHTML = 'Saved!';
     });
     restoreCounter();
   };

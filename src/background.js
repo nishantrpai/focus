@@ -28,7 +28,10 @@ setInterval(async () => {
     if (minutes == 0 && seconds == 0 && hours != 0) {
       chrome.storage.local.get(['totalHours']).then((result) => {
         let totalHours = result.totalHours || 0;
-        chrome.storage.local.set({ totalHours: totalHours + 1 }).then(() => {
+        // so 1 hour = 1 point, 2 hours = 2 points, 3 hours = 4 points, 4 hours = 8 points, etc.
+        let points = Math.pow(2, (totalHours-1));
+        chrome.storage.local.set({ totalHours: totalHours + points }).then(() => {
+          console.log('Total hours', totalHours + points);
         });
       });
     }
