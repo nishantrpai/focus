@@ -52,6 +52,13 @@ You can also read this discussion of me with chatgpt to get an idea of what filt
 
 [Chat Link](https://chat.openai.com/share/96567488-fb97-40db-8308-abceaf578f50)
 
+# Where do I get OpenAI keys?
+
+1. Go to the [website](https://platform.openai.com/api-keys).
+2. Generate a new key.
+3. Copy it.
+4. Paste it in the extension.
+
 # How to start the game?
 
 1. Click on the extension icon.
